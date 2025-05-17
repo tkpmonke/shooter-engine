@@ -1,6 +1,7 @@
 #include "RenderingDevice.hpp"
 #include "Logging.hpp"
 
+#include <glm/gtc/type_ptr.hpp>
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -125,6 +126,37 @@ namespace engine::rendering::gl {
 
 		s->internal = (void*)(unsigned long int)shaderProgram;
 	}
+
+	void GLRenderingDevice::set_shader_float(Shader* shader, const char* name, float v) {
+		glUseProgram((unsigned long int)shader->internal);
+		glUniform1f(glGetUniformLocation((unsigned long int)shader->internal, name), v);
+	}
+
+	void GLRenderingDevice::set_shader_int(Shader* shader, const char* name, int v) {
+		glUseProgram((unsigned long int)shader->internal);
+		glUniform1f(glGetUniformLocation((unsigned long int)shader->internal, name), v);
+	}
+
+	void GLRenderingDevice::set_shader_vec2(Shader* shader, const char* name, glm::vec2 v) {
+		glUseProgram((unsigned long int)shader->internal);
+		glUniform2f(glGetUniformLocation((unsigned long int)shader->internal, name), v.x, v.y);
+	}
+
+	void GLRenderingDevice::set_shader_vec3(Shader* shader, const char* name, glm::vec3 v) {
+		glUseProgram((unsigned long int)shader->internal);
+		glUniform3f(glGetUniformLocation((unsigned long int)shader->internal, name), v.x, v.y, v.z);
+	}
+
+	void GLRenderingDevice::set_shader_vec4(Shader* shader, const char* name, glm::vec4 v) {
+		glUseProgram((unsigned long int)shader->internal);
+		glUniform4f(glGetUniformLocation((unsigned long int)shader->internal, name), v.x, v.y, v.z, v.w);
+	}
+
+	void GLRenderingDevice::set_shader_mat4(Shader* shader, const char* name, glm::mat4 v) {
+		glUseProgram((unsigned long int)shader->internal);
+		glUniformMatrix4fv(glGetUniformLocation((unsigned long int)shader->internal, name), 1, GL_FALSE, glm::value_ptr(v));
+	}
+
 
 	/// unused by opengl atm
 	void GLRenderingDevice::shutdown() {

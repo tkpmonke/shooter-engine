@@ -1,10 +1,12 @@
+#include "rendering/RenderingDevice.hpp"
 #include "rendering/opengl/RenderingDevice.hpp"
 #include "windowing/Window.hpp"
+#include "Object.hpp"
+#include "loading/MeshLoader.hpp"
 
 using namespace engine;
 using namespace engine::windowing;
 using namespace engine::rendering;
-using namespace engine::rendering::gl;
 
 const std::vector<Vertex> square_vertices = {
    {.position = {0.5f,  0.5f, 0.0f}},
@@ -24,11 +26,14 @@ const Mesh square_mesh = {
 
 const char* vertex_shader = "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
+	 "uniform mat4 u_model;"
+	 "uniform mat4 u_view;"
+	 "uniform mat4 u_projection;"
     "out vec3 pos;\n"
     "void main()\n"
     "{\n"
     "   pos = aPos+0.5f;\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "   gl_Position = u_projection*u_view*u_model*vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
     "}\0";
 const char* fragment_shader = "#version 330 core\n"
     "out vec4 FragColor;\n"
@@ -42,27 +47,38 @@ const char* fragment_shader = "#version 330 core\n"
 
 int main(void) {
 	Window window;
-	window.create(320, 200, (char*)"Editor");
+	window.create(1280, 720, (char*)"Editor");
 
+	RenderingDevice::create_rendering_device();
+	gl::GLRenderingDevice* renderer = (gl::GLRenderingDevice*)RenderingDevice::get_instance();
+	renderer->initilize();
 
-	GLRenderingDevice renderer;
-	renderer.initilize();
+	Camera camera;
+	camera.position = {0,0,5};
+
 	Shader shader = {
 		.vertex_shader = (char*)vertex_shader,
-		.fragment_shader = (char*)fragment_shader
+		.fragment_shader = (char*)fragment_shader,
+		.internal = 0
 	};
-	renderer.compile_shader(&shader);
+	renderer->compile_shader(&shader);
 
-	RenderObject* object = renderer.create_object((Mesh*)&square_mesh, &shader);
+	Mesh* mesh = engine::loading::LoadMesh("./sphere.glb");
+
+	Object object;
+	object.initlize(mesh, &shader);
 
 	while (window.status()) {
-		renderer.begin_frame();
-		renderer.draw(object);
+		renderer->begin_frame();
+
+		camera.process(&window);
+		object.render(&camera);
+		
 		window.present();
 	}
 
-	renderer.shutdown_object(object);
-	renderer.shutdown_shader(&shader);
-	renderer.shutdown();
+	renderer->shutdown_shader(&shader);
+	renderer->shutdown();
+	RenderingDevice::shutdown_instance();
 	window.shutdown();
 }

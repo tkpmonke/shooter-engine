@@ -9,7 +9,10 @@ namespace engine::windowing {
 		void shutdown();
 
 		int width, height;
+		double time;
 
 		void* internal;
 	};
 }
+
+

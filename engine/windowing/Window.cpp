@@ -9,6 +9,8 @@ namespace engine::windowing {
 	}
 
 	bool Window::status() {
+		glfwPollEvents();
+
 		static int pw, ph;
 		glfwGetWindowSize((GLFWwindow*)this->internal, &this->width, &this->height);
 		if (pw != this->width || ph != this->height) {
@@ -17,7 +19,8 @@ namespace engine::windowing {
 			ph = this->height;
 		}
 
-		glfwPollEvents();
+		this->time = glfwGetTime();
+
 		return !glfwWindowShouldClose((GLFWwindow*)this->internal);
 	}
 
