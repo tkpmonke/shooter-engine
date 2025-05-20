@@ -2,16 +2,18 @@ workspace "engine"
    architecture "x86_64"
    configurations { "Debug", "Release"}
 
+include 'external/premake5.lua'
+
 project "engine"
    kind "SharedLib"
    language "C++"
    cppdialect "c++17"
 	warnings "Extra"
    targetdir "bin"
-   includedirs { "engine" }
+   includedirs { "engine", "external", "external/glew/include", "external/glfw/include" }
    files { "engine/**.cpp", "engine/**.hpp" }
    
-   links { "GL", "glfw", "GLEW" }
+   links { "GL", "glfw", "glew" }
 
    filter "configurations:Debug"
       defines { "DEBUG" }
@@ -27,10 +29,10 @@ project "editor"
    cppdialect "c++17"
 	warnings "Extra"
    targetdir "bin"
-   includedirs { "editor", "engine" }
+   includedirs { "editor", "engine", "external" }
    files { "editor/**.cpp", "editor/**.hpp" }
 
-   links { "engine" }
+   links { "engine", "imgui", "imguizmo" }
 
    filter "configurations:Debug"
       defines { "DEBUG" }

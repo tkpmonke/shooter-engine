@@ -5,9 +5,15 @@
 #define GLM_FORCE_CTOR_INIT
 #include <glm/glm.hpp>
 
+#include <string>
+
 namespace engine {
 	class Object {
 	public:
+		std::string name = "Object";
+		unsigned long int id;
+		std::vector<Object> children;
+
 		glm::vec3 position = {0,0,0}, rotation = {0,0,0}, scale = {1,1,1};
 		glm::vec3 forward, right, up;
 

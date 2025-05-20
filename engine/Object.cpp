@@ -6,7 +6,7 @@
 namespace engine {
 	void Object::initlize(rendering::Mesh* mesh, rendering::Shader* shader) {
 		rendering::RenderingDevice* renderer = rendering::RenderingDevice::get_instance();
-		this->render_object = renderer->create_object(mesh, shader);
+		this->render_object = renderer->create_object(mesh);
 		this->shader = shader;
 	}
 
@@ -23,7 +23,7 @@ namespace engine {
 		renderer->set_shader_mat4(this->shader, "u_view", camera->view);
 		renderer->set_shader_mat4(this->shader, "u_projection", camera->projection);
 
-		renderer->draw(this->render_object);
+		renderer->draw(this->render_object, this->shader);
 	}
 
 	void Object::shutdown() {

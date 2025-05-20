@@ -1,11 +1,15 @@
 #include "Camera.hpp"
 #include <glm/gtc/quaternion.hpp>
 
+#include "Logging.hpp"
+#include <string>
+
 namespace engine::rendering {
 	void Camera::process(engine::windowing::Window* window) {
+
 		switch (this->projection_mode) {
 			case(projection_mode_orthographic):
-         	this->projection = glm::ortho(0.f, (float)window->width, 0.f, (float)window->height, this->min, this->max); 
+         	this->projection = glm::ortho(0.f, (float)window->width/window->height, 0.f, 1.0f, this->min, this->max); 
 				break;
 			case(projection_mode_perspective):
 			default:
@@ -13,9 +17,7 @@ namespace engine::rendering {
 				break;
 		}
 
-		glm::vec3 euler = this->rotation;
-      euler = glm::radians(euler);
-
+		glm::vec3 euler = glm::radians(this->rotation);
       float pitch = euler.y;
       float yaw = euler.x;
       this->forward.x = -sin(yaw) * cos(pitch);

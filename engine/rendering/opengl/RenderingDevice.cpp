@@ -45,17 +45,16 @@ namespace engine::rendering::gl {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void GLRenderingDevice::draw(RenderObject* o) {
+	void GLRenderingDevice::draw(RenderObject* o, Shader* shader) {
 		GLRenderObject* object = (GLRenderObject*)o;
 
 		glBindVertexArray(object->vao);
-		glUseProgram(object->program);
+		glUseProgram((unsigned long int)shader->internal);
 		glDrawElements(GL_TRIANGLES, object->indice_count, GL_UNSIGNED_INT, 0);
 	}
 
-	RenderObject* GLRenderingDevice::create_object(Mesh* mesh, Shader* shader) {
+	RenderObject* GLRenderingDevice::create_object(Mesh* mesh) {
 		GLRenderObject* object = (GLRenderObject*)malloc(sizeof(GLRenderObject));
-		object->program = (unsigned long int)shader->internal;
 
 		glGenVertexArrays(1, &object->vao);
 		glBindVertexArray(object->vao);

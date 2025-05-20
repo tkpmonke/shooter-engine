@@ -8,16 +8,16 @@
 namespace engine::rendering::gl {
 
 	struct GLRenderObject {
-		unsigned int vao, vbo, ebo, program, indice_count;
+		unsigned int vao, vbo, ebo, indice_count;
 	};
 
 	class GLRenderingDevice : public RenderingDevice {
 	public:
 		void initilize();
 		void begin_frame();
-		void draw(RenderObject* object);
+		void draw(RenderObject* object, Shader*);
 
-		RenderObject* create_object(Mesh*, Shader*);
+		RenderObject* create_object(Mesh*);
 		void compile_shader(Shader*);
 		void bind_shader(Shader*);
 

@@ -18,9 +18,9 @@ namespace engine::rendering {
 
 		virtual void initilize() = 0;
 		virtual void begin_frame() = 0;
-		virtual void draw(RenderObject* object) = 0;
+		virtual void draw(RenderObject* object, Shader* shader) = 0;
 
-		virtual RenderObject* create_object(Mesh*, Shader*) = 0;
+		virtual RenderObject* create_object(Mesh*) = 0;
 		virtual void compile_shader(Shader*) = 0;
 
 		virtual void set_shader_float(Shader*, const char* name, float v) = 0;

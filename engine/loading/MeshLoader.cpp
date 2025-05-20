@@ -21,7 +21,7 @@ namespace engine::loading {
 	}
 
 	tinygltf::Model model;
-	rendering::Mesh* LoadMesh(const char* path, mesh_type type) {
+	rendering::Mesh* load_mesh(const char* path, int type, size_t size) {
 		rendering::Mesh* mesh = (rendering::Mesh*)malloc(sizeof(rendering::Mesh));
 		memset((void*)mesh, 0, sizeof(rendering::Mesh));
 
@@ -30,15 +30,21 @@ namespace engine::loading {
 		std::string warn;
 		
 		bool ret;
-		switch (type) {
-			case (mesh_type_ascii):
+		if (type & mesh_type_ascii) {
+			if (type & mesh_type_file) {
 				ret = loader.LoadASCIIFromFile(&model, &err, &warn, path);
-				break;
-			case (mesh_type_binary):
-			default:
+			} else {
+				ret = loader.LoadASCIIFromString(&model, &err, &warn, path, size, ".");
+			}
+		} else {
+			if (type & mesh_type_file) {
 				ret = loader.LoadBinaryFromFile(&model, &err, &warn, path);
-				break;
+			} else {
+
+				ret = loader.LoadBinaryFromMemory(&model, &err, &warn, (const unsigned char*)path, size);
+			}
 		}
+
 		if (!warn.empty()) {
 			engine::logging::print_warning(warn.c_str());
 		} if (!err.empty()) {

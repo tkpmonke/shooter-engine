@@ -4,8 +4,10 @@
 
 namespace engine::loading {
 	enum mesh_type {
-		mesh_type_ascii = 0,
-		mesh_type_binary = 1
+		mesh_type_ascii = 1,
+		mesh_type_binary = 2,
+		mesh_type_file = 4,
+		mesh_type_memory = 8
 	};
-	rendering::Mesh* LoadMesh(const char* path, mesh_type type = mesh_type_binary);
+	rendering::Mesh* load_mesh(const char* path, int type = (mesh_type_binary | mesh_type_file), size_t size = 0);
 }
