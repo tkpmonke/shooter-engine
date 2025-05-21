@@ -19,6 +19,7 @@ namespace editor::GUI {
 		long int selected_object = -2;
 		ImGuizmo::OPERATION operation = ImGuizmo::OPERATION::TRANSLATE;
 		ImGuizmo::MODE mode = ImGuizmo::MODE::LOCAL;
+		engine::rendering::Camera camera;
 	} gui_state;
 
 	void initilize(engine::windowing::Window* window) {
@@ -141,20 +142,21 @@ namespace editor::GUI {
 
 				ImGui::SeparatorText("Transform");
 
-				ImGui::InputFloat3("Position", glm::value_ptr(scene.camera.position));
-				ImGui::InputFloat3("Rotation", glm::value_ptr(scene.camera.rotation));
+				ImGui::DragFloat3("Position", glm::value_ptr(scene.camera.position));
+				ImGui::DragFloat3("Rotation", glm::value_ptr(scene.camera.rotation));
 				
 				ImGui::SeparatorText("Camera");
 				
-				ImGui::InputFloat("FOV", &scene.camera.fov);
-				ImGui::InputFloat("Min", &scene.camera.min);
-				ImGui::InputFloat("Max", &scene.camera.max);
+				ImGui::DragFloat("FOV", &scene.camera.fov);
+				ImGui::DragFloat("Min", &scene.camera.min);
+				ImGui::DragFloat("Max", &scene.camera.max);
 
 				if (ImGui::RadioButton("Perspective", 
 						scene.camera.projection_mode == engine::rendering::Camera::projection_mode_perspective)) {
 					scene.camera.projection_mode = engine::rendering::Camera::projection_mode_perspective;
-					ImGui::SameLine();
-				} if (ImGui::RadioButton("Orthographic", 
+				} 
+				ImGui::SameLine();
+				if (ImGui::RadioButton("Orthographic", 
 						scene.camera.projection_mode == engine::rendering::Camera::projection_mode_orthographic)) {
 					scene.camera.projection_mode = engine::rendering::Camera::projection_mode_orthographic;
 				}
@@ -167,9 +169,9 @@ namespace editor::GUI {
 
 				ImGui::SeparatorText("Transform");
 
-				ImGui::InputFloat3("Position", glm::value_ptr(obj->position));
-				ImGui::InputFloat3("Rotation", glm::value_ptr(obj->rotation));
-				ImGui::InputFloat3("Scale", glm::value_ptr(obj->scale));
+				ImGui::DragFloat3("Position", glm::value_ptr(obj->position));
+				ImGui::DragFloat3("Rotation", glm::value_ptr(obj->rotation));
+				ImGui::DragFloat3("Scale", glm::value_ptr(obj->scale));
 
 				if (ImGui::Button(((std::string)"Set Shader (current: " + obj->shader->name + ")").data())) {
 					ImGui::OpenPopup("Set Shader");
@@ -242,9 +244,9 @@ namespace editor::GUI {
 
 	void draw_all() {
 		begin_frame();
+		draw_gizmos();
 		draw_hierarchy();
 		draw_inspector();
-		draw_gizmos();
 		finish_frame();
 	}
 }
