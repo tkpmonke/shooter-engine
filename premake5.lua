@@ -37,7 +37,7 @@ project "editor"
    includedirs { "editor", "engine", "external", "external/glew/include", "external/rgfw" }
    files { "editor/**.cpp", "editor/**.hpp" }
 
-   links { "engine", "imguizmo", "imgui", "rgfw", "Xrandr" }
+   links { "engine", "imguizmo", "imgui", "rgfw" }
 
    filter "configurations:Debug"
       defines { "DEBUG" }
