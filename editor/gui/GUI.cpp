@@ -212,7 +212,7 @@ namespace editor::GUI {
 			);
 		}
 
-		if (ImGui::Begin("yuhhh")) {
+		if (ImGui::Begin("Tools")) {
 			if (ImGui::RadioButton("Translate", gui_state.operation == ImGuizmo::TRANSLATE)) {
         		gui_state.operation = ImGuizmo::TRANSLATE;
 			}

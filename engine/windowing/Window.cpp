@@ -8,7 +8,7 @@
 namespace engine::windowing {
 	void Window::create(unsigned int width, unsigned int height, char* title) {
 		RGFW_init();
-		this->rgfw_window = RGFW_createWindow(title, RGFW_RECT(0, 0, 1280, 720), RGFW_windowCenter);
+		this->rgfw_window = RGFW_createWindow(title, RGFW_RECT(0, 0, width, height), RGFW_windowCenter);
 
 		RGFW_window_makeCurrent(this->rgfw_window);
 	}
@@ -18,13 +18,13 @@ namespace engine::windowing {
 
 		this->width = this->rgfw_window->r.w;
 		this->height = this->rgfw_window->r.h;
-		/*
+
 		static int pw = 0, ph = 0;
 		if (pw != this->width || ph != this->height) {
 			glViewport(0,0, this->width, this->height);
 			pw = this->width;
 			ph = this->height;
-		}*/
+		}
 
 		this->time = RGFW_getTime();
 

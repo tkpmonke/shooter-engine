@@ -1,6 +1,6 @@
 workspace "engine"
-   architecture "x86_64"
    configurations { "Debug", "Release"}
+	architecture "x86_64"
 
 include 'external/premake5.lua'
 
@@ -15,8 +15,8 @@ project "engine"
    
    links { "glew", "rgfw" }
 
-    filter "system:Unix"
-        links { "GL" }
+   filter "system:Unix"
+	   links { "GL", "Xrandr", "X11" }
     filter "system:Windows"
         links { "opengl32" }
 
@@ -37,7 +37,7 @@ project "editor"
    includedirs { "editor", "engine", "external", "external/glew/include", "external/rgfw" }
    files { "editor/**.cpp", "editor/**.hpp" }
 
-   links { "engine", "imguizmo", "imgui", "rgfw" }
+   links { "engine", "imguizmo", "imgui", "rgfw", "Xrandr" }
 
    filter "configurations:Debug"
       defines { "DEBUG" }

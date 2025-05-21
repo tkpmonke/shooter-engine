@@ -13,7 +13,7 @@ using namespace engine::windowing;
 using namespace engine::rendering;
 
 int main(void) {
-	Window window;
+	windowing::Window window;
 	window.create(1280, 720, (char*)"Editor");
 
 	RenderingDevice::create_rendering_device();
