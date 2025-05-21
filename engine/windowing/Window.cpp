@@ -5,6 +5,12 @@
 #include <assert.h>
 #include <string>
 
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h> // for GL/GL.h
+#include <GL/GL.h> // for glViewport
+#endif
+
 namespace engine::windowing {
 	void Window::create(unsigned int width, unsigned int height, char* title) {
 		RGFW_init();

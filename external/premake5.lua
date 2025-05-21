@@ -43,9 +43,9 @@ project "glew"
    includedirs { "glew/include" }
    files { "glew/**.c", "glew/**.h" }
    
-	filter "platforms:Linux"
+	filter "system:Linux"
 		links { "GL", "m" }
-	filter "platforms:Windows"
+	filter "system:Windows"
 		links { "opengl32" }
 
    defines { "GLEW_NO_GLU", "GLEW_SHARED" }
@@ -68,7 +68,7 @@ project "rgfw"
    includedirs { "rgfw" }
    files { "rgfw/**.c", "rgfw/**.h" }
 
-	--filter "platforms:Linux"
+	filter "system:Linux"
 		links { "Xrandr", "X11", "Xinerama", "Xi", "m", "dl", "pthread", "GL" }
 
    filter "configurations:debug"
