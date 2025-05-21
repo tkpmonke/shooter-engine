@@ -25,8 +25,10 @@ project "engine"
       symbols "On"
 
    filter "configurations:Release"
-      defines { "NDEBUG" }
-      optimize "On"
+        defines { "NDEBUG" }
+        optimize "On"
+        symbols "Off"
+
 
 project "editor"
    kind "ConsoleApp"
@@ -46,3 +48,4 @@ project "editor"
    filter "configurations:Release"
       defines { "NDEBUG" }
       optimize "On"
+	    symbols "Off"

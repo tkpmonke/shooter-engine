@@ -14,6 +14,7 @@ project "imgui"
 
 	filter "configurations:Release"
 		defines { "NDEBUG" }
+		symbols "Off"
 		optimize "On"
 
 project "imguizmo"
@@ -33,6 +34,7 @@ project "imguizmo"
    filter "configurations:Release"
 	  defines { "NDEBUG" }
 	  optimize "On"
+	  symbols "Off"
 
 project "glew"
    kind "SharedLib"
@@ -42,7 +44,7 @@ project "glew"
 	objdir "../obj"
    includedirs { "glew/include" }
    files { "glew/**.c", "glew/**.h" }
-   
+ 
 	filter "system:Linux"
 		links { "GL", "m" }
 	filter "system:Windows"
@@ -50,13 +52,14 @@ project "glew"
 
    defines { "GLEW_NO_GLU", "GLEW_SHARED" }
 
-   filter "configurations:debug"
+   filter "configurations:Debug"
 	  defines { "DEBUG" }
 	  --optimize "On"
 	  symbols "On"
 
-   filter "configurations:release"
+   filter "configurations:Release"
 	  defines { "NDEBUG" }
+	  symbols "Off"
 	  optimize "On"
 
 project "rgfw"
@@ -71,13 +74,14 @@ project "rgfw"
 	filter "system:Linux"
 		links { "Xrandr", "X11", "Xinerama", "Xi", "m", "dl", "pthread", "GL" }
 
-   filter "configurations:debug"
+   filter "configurations:Debug"
 	  defines { "DEBUG" }
 	  --optimize "On"
 	  symbols "On"
 
-   filter "configurations:release"
+   filter "configurations:Release"
 	  defines { "NDEBUG" }
+	  symbols "Off"
 	  optimize "On"
 
 --	we now use rgfw, here just in case
