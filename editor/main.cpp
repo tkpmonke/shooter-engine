@@ -32,6 +32,7 @@ int main(void) {
 	Shader* shader = &cache.shaders["core/default"];
 	Mesh* mesh = (Mesh*)engine::loading::AssetCache::get_instance().load_mesh("assets/sphere.glb");
 
+	
 	Object* object = scene.create_object();
 	object->initlize(mesh, shader);
 

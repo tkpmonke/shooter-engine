@@ -2,6 +2,7 @@
 
 #include "rendering/Mesh.hpp"
 #include "rendering/Shader.hpp"
+#include "crossplatform/Export.hpp"
 
 #include <unordered_map>
 #include <map>
@@ -45,14 +46,14 @@ namespace engine::loading {
 
 		std::unordered_map<std::string, file_info> files;
 
-		const std::string load_file(const char* path);
-		const rendering::Mesh* load_mesh(const char* path);
-		void load_shader(const char* vertex_path, const char* fragment_path, const char* shader_path);
+		ENGINE_CROSSPLATFORM_EXPORT const std::string load_file(const char* path);
+		ENGINE_CROSSPLATFORM_EXPORT const rendering::Mesh* load_mesh(const char* path);
+		ENGINE_CROSSPLATFORM_EXPORT void load_shader(const char* vertex_path, const char* fragment_path, const char* shader_path);
 
-		load_mode get_mode();
-		void set_mode(load_mode mode);
+		ENGINE_CROSSPLATFORM_EXPORT load_mode get_mode();
+		ENGINE_CROSSPLATFORM_EXPORT void set_mode(load_mode mode);
 
-		static AssetCache& get_instance();
+		ENGINE_CROSSPLATFORM_EXPORT static AssetCache& get_instance();
 		
 	private:
 		load_mode mode = load_mode_none;

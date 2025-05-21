@@ -1,6 +1,7 @@
 #pragma once
 #include "rendering/RenderingDevice.hpp"
 #include "rendering/Camera.hpp"
+#include "crossplatform/Export.hpp"
 
 #define GLM_FORCE_CTOR_INIT
 #include <glm/glm.hpp>
@@ -20,8 +21,8 @@ namespace engine {
 		rendering::RenderObject* render_object;
 		rendering::Shader* shader;
 
-		void initlize(rendering::Mesh* mesh, rendering::Shader* shader);
-		void render(rendering::Camera* camera);
-		void shutdown();
+		ENGINE_CROSSPLATFORM_EXPORT void initlize(rendering::Mesh* mesh, rendering::Shader* shader);
+		ENGINE_CROSSPLATFORM_EXPORT void render(rendering::Camera* camera);
+		ENGINE_CROSSPLATFORM_EXPORT void shutdown();
 	};
 }

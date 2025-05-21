@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 
 #include "windowing/Window.hpp"
+#include "crossplatform/Export.hpp"
 
 namespace engine::rendering {
 	class Camera {
@@ -19,6 +20,6 @@ namespace engine::rendering {
 			projection_mode_perspective = 1,
 		} projection_mode = projection_mode_perspective;
 
-		void process(engine::windowing::Window*);
+		ENGINE_CROSSPLATFORM_EXPORT void process(engine::windowing::Window*);
 	};
 }

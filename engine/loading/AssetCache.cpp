@@ -36,10 +36,8 @@ namespace engine::loading {
 				} else {
 					logging::print_error(((std::string)"File not found : " + path).data());
 				}
-			default:
-				break;
 		}
-		return NULL;
+		return "";
 	}
 	
 	const rendering::Mesh* AssetCache::load_mesh(const char* path) {
@@ -67,7 +65,7 @@ namespace engine::loading {
 						read_file(path);
 					}
 
-					std::string real_path = std::filesystem::current_path() / path;
+					std::string real_path = (std::filesystem::current_path() / ((std::filesystem::path)path).make_preferred()).string();
 
 					std::string file_ext = ((std::filesystem::path)path).extension().string();
 					this->meshes[path] = (*loading::load_mesh(real_path.data(),
@@ -75,7 +73,7 @@ namespace engine::loading {
 					return &this->meshes[path];
 				
 				} else {
-					logging::print_error(((std::string)"File not found : " + (std::filesystem::current_path()/path).string()).data());
+					logging::print_error(((std::string)"File not found : " + (std::filesystem::current_path()/ ((std::filesystem::path)path).make_preferred()).string()).data());
 				}
 			default:
 				break;
@@ -101,8 +99,8 @@ namespace engine::loading {
 				}
 				break;
 			case (load_mode_folder):
-				if (std::filesystem::exists(std::filesystem::current_path() / vertex_path)
-						&& std::filesystem::exists(std::filesystem::current_path() / fragment_path)) {
+				if (std::filesystem::exists(std::filesystem::current_path() / ((std::filesystem::path)vertex_path).make_preferred())
+						&& std::filesystem::exists(std::filesystem::current_path() / ((std::filesystem::path)fragment_path).make_preferred())) {
 
 					read_file(vertex_path);
 					read_file(fragment_path);
@@ -112,7 +110,7 @@ namespace engine::loading {
 					this->shaders[shader_path].name = shader_path;
 					rendering::RenderingDevice::get_instance()->compile_shader(&this->shaders[shader_path]);
 				} else {
-					logging::print_error(((std::string)"File not found : " + vertex_path + (std::string)" and " + fragment_path).data());
+					logging::print_error(((std::string)"File not found : " + ((std::filesystem::path)vertex_path).make_preferred().string() + (std::string)" and " + ((std::filesystem::path)fragment_path).make_preferred().string()).data());
 				}
 				break;
 			default:
@@ -138,7 +136,12 @@ namespace engine::loading {
 	}
 
 	void AssetCache::read_file(const char* path) {
-		std::ifstream ifstream(std::filesystem::current_path() / path);
+		std::ifstream ifstream((std::filesystem::current_path() / path).make_preferred(), std::ios::binary);
+
+		if (!ifstream.is_open()) {
+			logging::print_error("Failed to open file");
+			exit(2);
+		}
 
 		ifstream.seekg(0, std::ios::end);
 		size_t size = ifstream.tellg();

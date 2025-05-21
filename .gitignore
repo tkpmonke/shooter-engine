@@ -1,8 +1,16 @@
-.cache
 bin/*
 !bin/imgui.ini
 obj
+
+# make / clangd
+.cache
 Makefile
 *.make
 compile_commands.json
 
+# vs
+*.vcxproj
+*.filters
+*.user
+*.sln
+.vs/

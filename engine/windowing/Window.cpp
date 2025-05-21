@@ -1,35 +1,41 @@
 #include "Window.hpp"
-#include <GLFW/glfw3.h>
+#include "rendering/Camera.hpp"
+#include "Logging.hpp"
+
+#include <assert.h>
+#include <string>
 
 namespace engine::windowing {
 	void Window::create(unsigned int width, unsigned int height, char* title) {
-		glfwInit();
-		this->internal = glfwCreateWindow(width, height, title, NULL, NULL);
-		glfwMakeContextCurrent((GLFWwindow*)this->internal);
+		RGFW_init();
+		this->rgfw_window = RGFW_createWindow(title, RGFW_RECT(0, 0, 1280, 720), RGFW_windowCenter);
+
+		RGFW_window_makeCurrent(this->rgfw_window);
 	}
 
 	bool Window::status() {
-		glfwPollEvents();
+		RGFW_window_checkEvents(this->rgfw_window, RGFW_eventNoWait);
 
-		static int pw, ph;
-		glfwGetWindowSize((GLFWwindow*)this->internal, &this->width, &this->height);
+		this->width = this->rgfw_window->r.w;
+		this->height = this->rgfw_window->r.h;
+		/*
+		static int pw = 0, ph = 0;
 		if (pw != this->width || ph != this->height) {
 			glViewport(0,0, this->width, this->height);
 			pw = this->width;
 			ph = this->height;
-		}
+		}*/
 
-		this->time = glfwGetTime();
+		this->time = RGFW_getTime();
 
-		return !glfwWindowShouldClose((GLFWwindow*)this->internal);
+		return !RGFW_window_shouldClose(this->rgfw_window);
 	}
 
 	void Window::present() {
-		glfwSwapBuffers((GLFWwindow*)this->internal);
+		RGFW_window_swapBuffers(this->rgfw_window);
 	}
 
 	void Window::shutdown() {
-		glfwDestroyWindow((GLFWwindow*)this->internal);
-		glfwTerminate();
+		RGFW_window_close(this->rgfw_window);
 	}
 }

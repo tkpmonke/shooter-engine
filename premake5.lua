@@ -10,10 +10,15 @@ project "engine"
    cppdialect "c++17"
 	warnings "Extra"
    targetdir "bin"
-   includedirs { "engine", "external", "external/glew/include", "external/glfw/include" }
+   includedirs { "engine", "external", "external/glew/include", "external/glfw/include", "external/rgfw" }
    files { "engine/**.cpp", "engine/**.hpp" }
    
-   links { "GL", "glfw", "glew" }
+   links { "glew", "rgfw" }
+
+    filter "system:Unix"
+        links { "GL" }
+    filter "system:Windows"
+        links { "opengl32" }
 
    filter "configurations:Debug"
       defines { "DEBUG" }
@@ -29,10 +34,10 @@ project "editor"
    cppdialect "c++17"
 	warnings "Extra"
    targetdir "bin"
-   includedirs { "editor", "engine", "external" }
+   includedirs { "editor", "engine", "external", "external/glew/include", "external/rgfw" }
    files { "editor/**.cpp", "editor/**.hpp" }
 
-   links { "engine", "imgui", "imguizmo" }
+   links { "engine", "imguizmo", "imgui", "rgfw" }
 
    filter "configurations:Debug"
       defines { "DEBUG" }

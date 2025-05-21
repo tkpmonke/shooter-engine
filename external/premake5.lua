@@ -1,25 +1,23 @@
 project "imgui"
-   kind "SharedLib"
-   language "C++"
-   cppdialect "c++17"
+	kind "StaticLib"
+	language "C++"
+	cppdialect "c++17"
 	warnings "Extra"
-   targetdir "../bin"
+	targetdir "../bin"
 	objdir "../obj"
-   includedirs { "imgui" }
-   files { "imgui/**.cpp", "imgui/**.h" }
+	includedirs { "imgui" }
+	files { "imgui/**.cpp", "imgui/**.h" }
    
-   links { "glfw", "GL" }
+	filter "configurations:Debug"
+	  defines { "DEBUG" }
+	  symbols "On"
 
-   filter "configurations:Debug"
-      defines { "DEBUG" }
-      symbols "On"
-
-   filter "configurations:Release"
-      defines { "NDEBUG" }
-      optimize "On"
+	filter "configurations:Release"
+		defines { "NDEBUG" }
+		optimize "On"
 
 project "imguizmo"
-   kind "SharedLib"
+   kind "StaticLib"
    language "C++"
    cppdialect "c++17"
 	warnings "Extra"
@@ -28,15 +26,13 @@ project "imguizmo"
    includedirs { "imgui" }
    files { "imguizmo/**.cpp", "imguizmo/**.h" }
    
-   links { "imgui" }
-
    filter "configurations:Debug"
-      defines { "DEBUG" }
-      symbols "On"
+	  defines { "DEBUG" }
+	  symbols "On"
 
    filter "configurations:Release"
-      defines { "NDEBUG" }
-      optimize "On"
+	  defines { "NDEBUG" }
+	  optimize "On"
 
 project "glew"
    kind "SharedLib"
@@ -47,41 +43,63 @@ project "glew"
    includedirs { "glew/include" }
    files { "glew/**.c", "glew/**.h" }
    
-   links { "GL", "m" }
+	filter "system:Unix"
+		links { "GL", "m" }
+	filter "system:Windows"
+		links { "opengl32" }
 
    defines { "GLEW_NO_GLU", "GLEW_SHARED" }
 
    filter "configurations:debug"
-      defines { "DEBUG" }
-      --optimize "On"
-      symbols "On"
+	  defines { "DEBUG" }
+	  --optimize "On"
+	  symbols "On"
 
    filter "configurations:release"
-      defines { "NDEBUG" }
-      optimize "On"
+	  defines { "NDEBUG" }
+	  optimize "On"
 
-project "glfw"
+project "rgfw"
    kind "SharedLib"
-   language "C++"
-   cppdialect "c++17"
+   language "C"
+   cdialect "c99"
    targetdir "../bin"
 	objdir "../obj"
-   includedirs { "glfw/include" }
-
-   files { "glfw/**.c", "glfw/**.h" }
-
-   filter { "system:linux" }
-       defines { "_GLFW_X11" }
-       links { "X11", "Xrandr", "Xinerama", "Xi", "m", "dl", "pthread" }
-
-   filter "system:windows"
-       defines { "_GLFW_WIN32" }
-       links { "gdi32", "user32", "shell32" }
+   includedirs { "rgfw" }
+   files { "rgfw/**.c", "rgfw/**.h" }
+   
    filter "configurations:debug"
-      defines { "DEBUG" }
-      --optimize "On"
-      symbols "On"
+	  defines { "DEBUG" }
+	  --optimize "On"
+	  symbols "On"
 
    filter "configurations:release"
-      defines { "NDEBUG" }
-      optimize "On"
+	  defines { "NDEBUG" }
+	  optimize "On"
+
+--	we now use rgfw, here just in case
+--project "glfw"
+--   kind "StaticLib"
+--   language "C++"
+--   cppdialect "c++17"
+--   targetdir "../bin"
+--	objdir "../obj"
+--   includedirs { "glfw/include" }
+--
+--   files { "glfw/**.c", "glfw/**.h" }
+--
+--   filter { "system:linux" }
+--	   defines { "_GLFW_X11" }
+--	   links { "X11", "Xrandr", "Xinerama", "Xi", "m", "dl", "pthread" }
+--
+--   filter "system:windows"
+--	   defines { "_GLFW_WIN32" }
+--	   links { "gdi32", "user32", "shell32" }
+--   filter "configurations:debug"
+--	  defines { "DEBUG" }
+--	  --optimize "On"
+--	  symbols "On"
+--
+--   filter "configurations:release"
+--	  defines { "NDEBUG" }
+--	  optimize "On"

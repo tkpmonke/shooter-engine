@@ -2,6 +2,8 @@
 #include "Object.hpp"
 #include <vector>
 
+#include "crossplatform/Export.hpp"
+
 namespace engine {
 	class Scene {
 	public:
@@ -10,12 +12,12 @@ namespace engine {
 		std::vector<Object> objects;
 		rendering::Camera camera;
 
-		Object* create_object();
-
-		void render_objects();
-
-		void shutdown();
-
-		static Scene& get_instance();
+		ENGINE_CROSSPLATFORM_EXPORT Object* create_object();
+		
+		ENGINE_CROSSPLATFORM_EXPORT void render_objects();
+		
+		ENGINE_CROSSPLATFORM_EXPORT void shutdown();
+		
+		ENGINE_CROSSPLATFORM_EXPORT static Scene& get_instance();
 	};
 }

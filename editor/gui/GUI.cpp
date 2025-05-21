@@ -1,19 +1,18 @@
+#define RGFW_IMGUI_IMPLEMENTATION
+#define IMGUI_IMPL_OPENGL_LOADER_GLEW
+
+#include <stdint.h>
+#include "imgui/imgui.h"
+#include "imgui/imgui_stdlib.h"
+#include "imgui/imgui_impl_rgfw.h"
+#include "imgui/imgui_impl_opengl3.h"
+
 #include "GUI.hpp"
 #include "Scene.hpp"
 #include "rendering/Camera.hpp"
 #include "loading/AssetCache.hpp"
-
-#include "imgui/imgui.h"
-#include "imgui/imgui_stdlib.h"
-#include "imgui/imgui_impl_glfw.h"
-
 #include "imguizmo/ImGuizmo.h"
-
-#define IMGUI_IMPL_OPENGL_LOADER_GLEW
-#include "imgui/imgui_impl_opengl3.h"
-
 #include <glm/gtc/type_ptr.hpp>
-
 
 namespace editor::GUI {
 	struct gui_state {
@@ -31,14 +30,14 @@ namespace editor::GUI {
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
 		ImGui::StyleColorsDark();
-
-		ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)window->internal, true);
+		
+		ImGui_ImplRgfw_InitForOpenGL(window->rgfw_window, true);
 		ImGui_ImplOpenGL3_Init();
 	}
 
 	void begin_frame() {
 		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
+		ImGui_ImplRgfw_NewFrame();
 		ImGui::NewFrame();
 		ImGuizmo::BeginFrame();
 
@@ -52,7 +51,7 @@ namespace editor::GUI {
 
 	void shutdown() {
 		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplGlfw_Shutdown();
+		ImGui_ImplRgfw_Shutdown();
 		ImGui::DestroyContext();
 	}
 
