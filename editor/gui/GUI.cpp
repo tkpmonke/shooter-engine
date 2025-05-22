@@ -30,6 +30,12 @@ namespace editor::GUI {
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
+		/// this is a workaround for the shitty imgui backend
+		/// for rgfw
+#ifdef _WIN32
+		io.MouseDrawCursor = true;
+#endif
+
 		ImGui::StyleColorsDark();
 		
 		ImGui_ImplRgfw_InitForOpenGL(window->rgfw_window, true);
