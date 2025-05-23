@@ -41,6 +41,10 @@ Here is a list of planned/implemented features. This list is incomplete and will
     - [ ] Load Mesh
     - [x] Load Shader
 
+### Developers
+The team that makes shooter-engine possible. If you contribute feel free to add yourself to this list
+- [tkpmonke](https://github.com/tkpmonke) / Lead Developer / Windows and Linux Tester
+
 ### External Libraries
 shooter-engine uses a few external dependinces for thing i didn't feel like doing myself
 
