@@ -40,6 +40,7 @@ Here is a list of planned/implemented features. This list is incomplete and will
     - [ ] Add Object
     - [ ] Load Mesh
     - [x] Load Shader
+    - [ ] Load Texture
 
 ### Developers
 The team that makes shooter-engine possible. If you contribute feel free to add yourself to this list
