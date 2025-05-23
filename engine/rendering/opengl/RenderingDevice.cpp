@@ -84,44 +84,44 @@ namespace engine::rendering::gl {
 
 	void GLRenderingDevice::compile_shader(Shader* s) {
 		unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-   	glShaderSource(vertexShader, 1, (const char**)&s->vertex_shader, NULL);
-   	glCompileShader(vertexShader);
+		glShaderSource(vertexShader, 1, (const char**)&s->vertex_shader, NULL);
+		glCompileShader(vertexShader);
 
-   	int success;
-   	char infoLog[512];
-   	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-   	if (!success)
-   	{
-   	   glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-   	   engine::logging::print_error("GL_COMPILE_STATUS > VERTEX");
-   	   engine::logging::print(infoLog);
-   	}
+		int success;
+		char infoLog[512];
+		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+			engine::logging::print_error("GL_COMPILE_STATUS > VERTEX");
+			engine::logging::print(infoLog);
+		}
 
-   	unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-   	glShaderSource(fragmentShader, 1, (const char**)&s->fragment_shader, NULL);
-   	glCompileShader(fragmentShader);
+		unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(fragmentShader, 1, (const char**)&s->fragment_shader, NULL);
+		glCompileShader(fragmentShader);
 
-   	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-   	if (!success)
-   	{
-   	   glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-   	   engine::logging::print_error("GL_COMPILE_STATUS > FRAGMENT");
-   	   engine::logging::print(infoLog);
-   	}
+		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+			engine::logging::print_error("GL_COMPILE_STATUS > FRAGMENT");
+			engine::logging::print(infoLog);
+		}
 
-   	unsigned int shaderProgram = glCreateProgram();
-   	glAttachShader(shaderProgram, vertexShader);
-   	glAttachShader(shaderProgram, fragmentShader);
-   	glLinkProgram(shaderProgram);
+		unsigned int shaderProgram = glCreateProgram();
+		glAttachShader(shaderProgram, vertexShader);
+		glAttachShader(shaderProgram, fragmentShader);
+		glLinkProgram(shaderProgram);
 
-   	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-   	if (!success) {
-   	   glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-   	   engine::logging::print_error("GL_LINK_STATUS");
-   	   engine::logging::print(infoLog);
-   	}
-   	glDeleteShader(vertexShader);
-   	glDeleteShader(fragmentShader);
+		glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+		if (!success) {
+			glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+			engine::logging::print_error("GL_LINK_STATUS");
+			engine::logging::print(infoLog);
+		}
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
 
 		s->internal = (void*)(unsigned long int)shaderProgram;
 	}
