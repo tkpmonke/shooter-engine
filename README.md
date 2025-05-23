@@ -5,7 +5,7 @@ Designed with shooters in mind, shooter-engine is a work in progress high power 
 ### Features
 
 Here is a list of planned/implemented features. This list is incomplete and will change over time.
-
+The engine is still very young, so many of these features wont be implemented for a while
 - Rendering
     -   OpenGL
         - [x] Mesh Rendering
