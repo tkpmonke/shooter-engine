@@ -40,3 +40,13 @@ Here is a list of planned/implemented features. This list is incomplete and will
     - [ ] Add Object
     - [ ] Load Mesh
     - [x] Load Shader
+
+### External Libraries
+shooter-engine uses a few external dependinces for thing i didn't feel like doing myself
+
+- [RGFW](https://github.com/ColleagueRiley/RGFW)
+- [ImGUI](https://github.com/ocornut/imgui)
+- [GLEW](https://github.com/nigels-com/glew)
+- [GLM](https://github.com/g-truc/glm)
+- [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo)
+- [TinyGLTF](https://github.com/syoyo/tinygltf)
