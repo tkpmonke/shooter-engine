@@ -8,35 +8,35 @@ Here is a list of planned/implemented features. This list is incomplete and will
 
 - Rendering
     -   OpenGL
-        [x] Mesh Rendering
-        [x] Shader Loading
-        [ ] Render To Framebuffer
-        [ ] Textures
-        [ ] Skyboxes
-        [ ] Lightmaps
-        [ ] Compute Shaders
+        - [x] Mesh Rendering
+        - [x] Shader Loading
+        - [ ] Render To Framebuffer
+        - [ ] Textures
+        - [ ] Skyboxes
+        - [ ] Lightmaps
+        - [ ] Compute Shaders
     -   Vulkan
-        [ ] Mesh Rendering
-        [ ] Shader Loading
-        [ ] Render To Framebuffer
-        [ ] Textures
-        [ ] Skyboxes
-        [ ] Lightmaps
-        [ ] Compute Shaders
+        - [ ] Mesh Rendering
+        - [ ] Shader Loading
+        - [ ] Render To Framebuffer
+        - [ ] Textures
+        - [ ] Skyboxes
+        - [ ] Lightmaps
+        - [ ] Compute Shaders
 
 - File Loading
-    [x] GLB/GLTF meshes
-    [x] Shaders
-    [ ] Scenes (yaml)
-    [ ] Projects (yaml)
+    - [x] GLB/GLTF meshes
+    - [x] Shaders
+    - [ ] Scenes (yaml)
+    - [ ] Projects (yaml)
 
 - Editor
-    [ ] Camera Movement
-    [x] Inspector
-    [x] Object Hierarchy
-    [x] Gizmos (ImGuizmo)
-    [ ] Mouse To Select Objects
-    [ ] File Browser
-    [ ] Add Object
-    [ ] Load Mesh
-    [x] Load Shader
+    - [ ] Camera Movement
+    - [x] Inspector
+    - [x] Object Hierarchy
+    - [x] Gizmos (ImGuizmo)
+    - [ ] Mouse To Select Objects
+    - [ ] File Browser
+    - [ ] Add Object
+    - [ ] Load Mesh
+    - [x] Load Shader
