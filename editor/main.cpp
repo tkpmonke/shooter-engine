@@ -5,6 +5,7 @@
 #include "Object.hpp"
 #include "Scene.hpp"
 #include "loading/AssetCache.hpp"
+#include "loading/SceneLoader.hpp"
 
 #include "gui/GUI.hpp"
 
@@ -28,33 +29,26 @@ int main(void) {
 	
 	cache.load_shader("assets/default.vs.glsl", "assets/default.fs.glsl", "core/default");
 	cache.load_shader("assets/default.vs.glsl", "assets/different_default.fs.glsl", "core/different_default");
-	
-	Shader* shader = &cache.shaders["core/default"];
-	Mesh* mesh = (Mesh*)engine::loading::AssetCache::get_instance().load_mesh("assets/sphere.glb");
+	cache.load_mesh("assets/sphere.glb");
 
+	loading::load_scene("assets/main.yaml");
 	
-	Object* object = scene.create_object();
-	object->initlize(mesh, shader);
+	//Object* object = scene.create_object();
+	//object->initilize(&cache.meshes["assets/sphere.glb"], &cache.shaders["core/default"]);
 
-	editor::GUI::initilize(&window);
+	editor::gui::initilize(&window);
 
 	while (window.status()) {
 		renderer->begin_frame();
-		scene.camera.process(&window);
-
-		scene.objects[0].rotation.x = window.time*15;
-		scene.objects[0].rotation.y = window.time*12;
-		scene.objects[0].rotation.z = window.time*20;
-		scene.render_objects();
-
-		editor::GUI::draw_all();
+		editor::gui::process_editor_camera();
+		editor::gui::draw_all();
 
 		window.present();
 	}
 
 	scene.shutdown();
-	editor::GUI::shutdown();
-	renderer->shutdown_shader(shader);
+	editor::gui::shutdown();
+	loading::AssetCache::shutdown();
 	renderer->shutdown();
 	RenderingDevice::shutdown_instance();
 	window.shutdown();

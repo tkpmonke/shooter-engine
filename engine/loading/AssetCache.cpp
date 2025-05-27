@@ -6,7 +6,8 @@
 
 #include <filesystem>
 #include <fstream>
-#include <sstream>
+
+#include <stdlib.h>
 
 namespace engine::loading {
 
@@ -25,7 +26,7 @@ namespace engine::loading {
 				}
 				break;
 			case (load_mode_folder):
-				if (this->files.count(path) == 1) {
+				if (std::filesystem::exists((std::filesystem::current_path() / path).make_preferred())) {
 					
 					if (!this->files[path].is_loaded) {
 						read_file(path);
@@ -40,7 +41,7 @@ namespace engine::loading {
 		return "";
 	}
 	
-	const rendering::Mesh* AssetCache::load_mesh(const char* path) {
+	void AssetCache::load_mesh(const char* path) {
 		switch (this->mode) {
 			case (load_mode_none):
 				logging::print_error("load mode is none, please call set_mode(load_mode mode) before loading files");
@@ -53,7 +54,7 @@ namespace engine::loading {
 					this->meshes[path] = (*loading::load_mesh(location,
 								(file_ext == ".glb" ? mesh_type_binary : mesh_type_ascii) | mesh_type_memory,
 								this->files[path].wad.size));
-					return &this->meshes[path];
+					this->meshes[path].path = path;
 				} else {
 					logging::print_error(((std::string)"File not found : " + path).data());
 				}
@@ -70,15 +71,14 @@ namespace engine::loading {
 					std::string file_ext = ((std::filesystem::path)path).extension().string();
 					this->meshes[path] = (*loading::load_mesh(real_path.data(),
 								(file_ext == ".glb" ? mesh_type_binary : mesh_type_ascii) | mesh_type_file));
-					return &this->meshes[path];
-				
+
+					this->meshes[path].path = path;
 				} else {
 					logging::print_error(((std::string)"File not found : " + (std::filesystem::current_path()/ ((std::filesystem::path)path).make_preferred()).string()).data());
 				}
 			default:
 				break;
 		}
-		return NULL;
 	}
 	
 	void AssetCache::load_shader(const char* vertex_path, const char* fragment_path, const char* shader_path) {
@@ -135,6 +135,12 @@ namespace engine::loading {
 		return instance;
 	}
 
+	void AssetCache::shutdown() {
+		for (auto [name, s] : get_instance().shaders) {
+			rendering::RenderingDevice::get_instance()->shutdown_shader(&s);
+		}
+	}
+
 	void AssetCache::read_file(const char* path) {
 		std::ifstream ifstream((std::filesystem::current_path() / path).make_preferred(), std::ios::binary);
 
@@ -149,5 +155,7 @@ namespace engine::loading {
 		ifstream.seekg(0, std::ios::beg);
 		ifstream.read(&this->files[path].folder.data[0], size);
 		ifstream.close();
+
+		this->files[path].is_loaded = true;
 	}
 }

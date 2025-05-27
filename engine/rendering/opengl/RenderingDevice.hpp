@@ -10,6 +10,7 @@ namespace engine::rendering::gl {
 
 	struct GLRenderObject {
 		unsigned int vao, vbo, ebo, indice_count;
+		RenderingDevice::draw_mode mode;
 	};
 
 	class GLRenderingDevice : public RenderingDevice {
@@ -18,9 +19,11 @@ namespace engine::rendering::gl {
 		ENGINE_CROSSPLATFORM_EXPORT void begin_frame();
 		ENGINE_CROSSPLATFORM_EXPORT void draw(RenderObject* object, Shader*);
 
-		ENGINE_CROSSPLATFORM_EXPORT RenderObject* create_object(Mesh*);
+		ENGINE_CROSSPLATFORM_EXPORT RenderObject* create_object(Mesh*, draw_mode draw_mode = draw_mode_triangles);
 		ENGINE_CROSSPLATFORM_EXPORT void compile_shader(Shader*);
 		ENGINE_CROSSPLATFORM_EXPORT void bind_shader(Shader*);
+
+		ENGINE_CROSSPLATFORM_EXPORT void set_line_width(float width);
 
 		ENGINE_CROSSPLATFORM_EXPORT void set_shader_float(Shader*, const char* name, float v);
 		ENGINE_CROSSPLATFORM_EXPORT void set_shader_int(Shader*, const char* name, int v);

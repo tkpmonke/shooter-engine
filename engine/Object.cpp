@@ -1,11 +1,15 @@
 #include "Object.hpp"
+#include "Scene.hpp"
 #include "rendering/Camera.hpp"
 
 #include <glm/gtc/quaternion.hpp>
 
 namespace engine {
-	void Object::initlize(rendering::Mesh* mesh, rendering::Shader* shader) {
+	void Object::initilize(rendering::Mesh* mesh, rendering::Shader* shader) {
 		rendering::RenderingDevice* renderer = rendering::RenderingDevice::get_instance();
+
+		this->mesh_name = mesh->path;
+
 		this->render_object = renderer->create_object(mesh);
 		this->shader = shader;
 	}
@@ -14,7 +18,6 @@ namespace engine {
 		rendering::RenderingDevice* renderer = rendering::RenderingDevice::get_instance();
 		
 		glm::mat4 model = glm::mat4(1.f);
-
       model = glm::translate(model, this->position);
       model *= glm::mat4_cast(glm::quat(glm::radians(this->rotation)));
       model = glm::scale(model, this->scale);
@@ -29,5 +32,9 @@ namespace engine {
 	void Object::shutdown() {
 		rendering::RenderingDevice* renderer = rendering::RenderingDevice::get_instance();
 		renderer->shutdown_object(this->render_object);
+	}
+
+	Object* Object::get_parent() {
+		return &Scene::get_instance().objects[this->parent_id];
 	}
 }

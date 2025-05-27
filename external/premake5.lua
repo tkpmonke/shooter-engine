@@ -84,29 +84,21 @@ project "rgfw"
 	  symbols "Off"
 	  optimize "On"
 
---	we now use rgfw, here just in case
---project "glfw"
---   kind "StaticLib"
---   language "C++"
---   cppdialect "c++17"
---   targetdir "../bin"
---	objdir "../obj"
---   includedirs { "glfw/include" }
---
---   files { "glfw/**.c", "glfw/**.h" }
---
---   filter { "system:linux" }
---	   defines { "_GLFW_X11" }
---	   links { "X11", "Xrandr", "Xinerama", "Xi", "m", "dl", "pthread" }
---
---   filter "system:windows"
---	   defines { "_GLFW_WIN32" }
---	   links { "gdi32", "user32", "shell32" }
---   filter "configurations:debug"
---	  defines { "DEBUG" }
---	  --optimize "On"
---	  symbols "On"
---
---   filter "configurations:release"
---	  defines { "NDEBUG" }
---	  optimize "On"
+project "yaml-cpp"
+   kind "SharedLib"
+   language "C++"
+   cppdialect "c++17"
+   targetdir "../bin"
+	objdir "../obj"
+   includedirs { "yaml-cpp" }
+   files { "yaml-cpp/**.cpp" }
+
+   filter "configurations:Debug"
+	  defines { "DEBUG" }
+	  --optimize "On"
+	  symbols "On"
+
+   filter "configurations:Release"
+	  defines { "NDEBUG" }
+	  symbols "Off"
+	  optimize "On"

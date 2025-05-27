@@ -3,6 +3,7 @@
 #include "crossplatform/Export.hpp"
 
 extern "C" {
+#define RGFW_IMPORT
 #include "rgfw/RGFW.h"
 }
 

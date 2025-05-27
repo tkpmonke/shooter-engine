@@ -47,13 +47,14 @@ namespace engine::loading {
 		std::unordered_map<std::string, file_info> files;
 
 		ENGINE_CROSSPLATFORM_EXPORT const std::string load_file(const char* path);
-		ENGINE_CROSSPLATFORM_EXPORT const rendering::Mesh* load_mesh(const char* path);
+		ENGINE_CROSSPLATFORM_EXPORT void load_mesh(const char* path);
 		ENGINE_CROSSPLATFORM_EXPORT void load_shader(const char* vertex_path, const char* fragment_path, const char* shader_path);
 
 		ENGINE_CROSSPLATFORM_EXPORT load_mode get_mode();
 		ENGINE_CROSSPLATFORM_EXPORT void set_mode(load_mode mode);
 
 		ENGINE_CROSSPLATFORM_EXPORT static AssetCache& get_instance();
+		ENGINE_CROSSPLATFORM_EXPORT static void shutdown();
 		
 	private:
 		load_mode mode = load_mode_none;

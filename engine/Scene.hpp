@@ -7,7 +7,7 @@
 namespace engine {
 	class Scene {
 	public:
-		char* name = (char*)"Cool And Awesome Scene";
+		std::string name = "Cool And Awesome Scene";
 
 		std::vector<Object> objects;
 		rendering::Camera camera;

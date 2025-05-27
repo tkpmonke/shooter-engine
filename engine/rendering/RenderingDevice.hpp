@@ -14,6 +14,15 @@ namespace engine::rendering {
 			graphics_api_vulkan = 1,
 		};
 
+		enum draw_mode {
+			draw_mode_triangles = 0,
+			draw_mode_lines = 1,
+			draw_mode_quads = 2,
+			draw_mode_triangle_strip = 3,
+			draw_mode_line_strip = 4,
+			draw_mode_quad_strip = 5
+		}; 
+
 		ENGINE_CROSSPLATFORM_EXPORT static void create_rendering_device(graphics_api api = graphics_api_opengl);
 		ENGINE_CROSSPLATFORM_EXPORT static RenderingDevice* get_instance();
 		ENGINE_CROSSPLATFORM_EXPORT static void shutdown_instance();
@@ -22,8 +31,10 @@ namespace engine::rendering {
 		ENGINE_CROSSPLATFORM_EXPORT virtual void begin_frame() = 0;
 		ENGINE_CROSSPLATFORM_EXPORT virtual void draw(RenderObject* object, Shader* shader) = 0;
 
-		ENGINE_CROSSPLATFORM_EXPORT virtual RenderObject* create_object(Mesh*) = 0;
+		ENGINE_CROSSPLATFORM_EXPORT virtual RenderObject* create_object(Mesh*, draw_mode draw_mode = draw_mode_triangles) = 0;
 		ENGINE_CROSSPLATFORM_EXPORT virtual void compile_shader(Shader*) = 0;
+		
+		ENGINE_CROSSPLATFORM_EXPORT virtual void set_line_width(float width) = 0;
 
 		ENGINE_CROSSPLATFORM_EXPORT virtual void set_shader_float(Shader*, const char* name, float v) = 0;
 		ENGINE_CROSSPLATFORM_EXPORT virtual void set_shader_int(Shader*, const char* name, int v) = 0;

@@ -13,7 +13,7 @@ project "engine"
    includedirs { "engine", "external", "external/glew/include", "external/glfw/include", "external/rgfw" }
    files { "engine/**.cpp", "engine/**.hpp" }
    
-   links { "glew", "rgfw" }
+   links { "glew", "rgfw", "yaml-cpp" }
 
    filter "system:Unix"
 	   links { "GL", "Xrandr", "X11" }
@@ -39,7 +39,7 @@ project "editor"
    includedirs { "editor", "engine", "external", "external/glew/include", "external/rgfw" }
    files { "editor/**.cpp", "editor/**.hpp" }
 
-   links { "engine", "imguizmo", "imgui", "rgfw" }
+   links { "engine", "imguizmo", "imgui", "rgfw", "yaml-cpp" }
 
    filter "configurations:Debug"
       defines { "DEBUG" }

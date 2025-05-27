@@ -32,7 +32,8 @@ namespace engine::rendering::gl {
 			exit(1);
 		}
 		glEnable(GL_DEPTH_TEST);
-		//glEnable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_CW);
 
 #ifdef DEBUG
 		glEnable(GL_DEBUG_OUTPUT);
@@ -50,10 +51,35 @@ namespace engine::rendering::gl {
 
 		glBindVertexArray(object->vao);
 		glUseProgram((unsigned long int)shader->internal);
-		glDrawElements(GL_TRIANGLES, object->indice_count, GL_UNSIGNED_INT, 0);
+		unsigned int mode;
+
+		switch (object->mode) {
+			case(draw_mode_triangles):
+				mode = GL_TRIANGLES;
+				break;
+			case(draw_mode_lines):
+				mode = GL_LINES;
+				break;
+			case(draw_mode_quads):
+				mode = GL_QUADS;
+				break;
+			case(draw_mode_triangle_strip):
+				mode = GL_TRIANGLE_STRIP;
+				break;
+			case(draw_mode_line_strip):
+				mode = GL_LINES;
+				break;
+			case(draw_mode_quad_strip):
+				mode = GL_QUAD_STRIP;
+				break;	
+			default:
+				break;
+		}
+
+		glDrawElements(mode, object->indice_count, GL_UNSIGNED_INT, 0);
 	}
 
-	RenderObject* GLRenderingDevice::create_object(Mesh* mesh) {
+	RenderObject* GLRenderingDevice::create_object(Mesh* mesh, draw_mode mode) {
 		GLRenderObject* object = (GLRenderObject*)malloc(sizeof(GLRenderObject));
 
 		glGenVertexArrays(1, &object->vao);
@@ -78,6 +104,7 @@ namespace engine::rendering::gl {
 		glEnableVertexAttribArray(2);
 
 		object->indice_count = mesh->indices.size();
+		object->mode = mode;
 
 		return (RenderObject*)object;
 	}
@@ -90,8 +117,7 @@ namespace engine::rendering::gl {
 		int success;
 		char infoLog[512];
 		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
+		if (!success) {
 			glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
 			engine::logging::print_error("GL_COMPILE_STATUS > VERTEX");
 			engine::logging::print(infoLog);
@@ -102,8 +128,7 @@ namespace engine::rendering::gl {
 		glCompileShader(fragmentShader);
 
 		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
+		if (!success) {
 			glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
 			engine::logging::print_error("GL_COMPILE_STATUS > FRAGMENT");
 			engine::logging::print(infoLog);
@@ -124,6 +149,10 @@ namespace engine::rendering::gl {
 		glDeleteShader(fragmentShader);
 
 		s->internal = (void*)(unsigned long int)shaderProgram;
+	}
+
+	void GLRenderingDevice::set_line_width(float width) {
+		glLineWidth(width);
 	}
 
 	void GLRenderingDevice::set_shader_float(Shader* shader, const char* name, float v) {
