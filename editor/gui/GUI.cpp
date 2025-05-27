@@ -5,6 +5,7 @@
 
 #include "GUI.hpp"
 #include "Scene.hpp"
+#include "Logging.hpp"
 namespace editor::gui {
 
 	void initilize(engine::windowing::Window* window) {
@@ -61,6 +62,10 @@ namespace editor::gui {
 	}
 
 	void draw_all() {
+		for (engine::Object& o : engine::Scene::get_instance().objects) {
+			o.calculate_transform();
+		}
+
 		for (engine::Object& o : engine::Scene::get_instance().objects) {
 			o.render(&GUIState::get_instance().camera);
 			render_children(o, &GUIState::get_instance().camera);

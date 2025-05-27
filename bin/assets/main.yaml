@@ -16,6 +16,22 @@ scene:
           mesh: assets/sphere.glb
           draw_mode: 0
           shader: core/default
+          children: 
+            - name: Sphere3
+              position: [1, -6, 6]
+              rotation: [75, 235, 123]
+              scale: [3.5, 3.5, 3.5]
+              mesh: assets/sphere.glb
+              draw_mode: 0
+              shader: core/different_default
+              children: []
+        - name: Sphere4
+          position: [2, 2, 4]
+          rotation: [25, 75, -53]
+          scale: [1.5, 1, 1]
+          mesh: assets/sphere.glb
+          draw_mode: 0
+          shader: core/different_default
           children: []
   camera:
     fov: 75

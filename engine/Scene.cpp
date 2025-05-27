@@ -18,6 +18,9 @@ namespace engine {
 	}
 
 	void Scene::render_objects() {
+		for (engine::Object& o : engine::Scene::get_instance().objects) {
+			o.calculate_transform();
+		}
 		for (Object& o : this->objects) {
 			o.render(&this->camera);
 			render_children(o, this);

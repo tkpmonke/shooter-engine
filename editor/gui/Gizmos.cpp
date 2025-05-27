@@ -14,25 +14,26 @@ namespace editor::gui {
 		ImGuizmo::SetRect(0, 0, gui_state.window->width, gui_state.window->height);
 		ImGuizmo::SetOrthographic(scene.camera.projection_mode == engine::rendering::Camera::projection_mode_orthographic);
 
-		glm::mat4 model = glm::mat4(1.f);
-      model = glm::translate(model, gui_state.selected_object->position);
-      model *= glm::mat4_cast(glm::quat(glm::radians(gui_state.selected_object->rotation)));
-      model = glm::scale(model, gui_state.selected_object->scale);
-		
 		if (ImGuizmo::Manipulate(
 			glm::value_ptr(gui_state.camera.view),
 			glm::value_ptr(gui_state.camera.projection),
 			gui_state.operation,
 			gui_state.mode,
-			glm::value_ptr(model))
+			glm::value_ptr(gui_state.selected_object->model_matrix))
 		) {
-			
+
 			ImGuizmo::DecomposeMatrixToComponents(
-				glm::value_ptr(model),
-				glm::value_ptr(gui_state.selected_object->position),
+				glm::value_ptr(gui_state.selected_object->model_matrix),
+				glm::value_ptr(gui_state.selected_object->global_position),
 				glm::value_ptr(gui_state.selected_object->rotation),
 				glm::value_ptr(gui_state.selected_object->scale)
 			);
+
+			if (gui_state.selected_object->parent == NULL) {
+				gui_state.selected_object->position = gui_state.selected_object->global_position;
+			} else {
+				gui_state.selected_object->position = gui_state.selected_object->global_position - gui_state.selected_object->parent->global_position;
+			}
 		}
 
 

@@ -92,7 +92,7 @@ namespace editor::gui {
 		Shader* shader = &engine::loading::AssetCache::get_instance().shaders["core/default"];
 		
 		glm::mat4 model = glm::mat4(1.f);
-      model = glm::translate(model, obj->position);
+      model = glm::translate(model, obj->global_position);
       model *= glm::mat4_cast(glm::quat(glm::radians(obj->rotation)));
       model = glm::scale(model, obj->scale);
 

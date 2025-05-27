@@ -6,7 +6,7 @@
 
 #include <yaml-cpp/yaml.h>
 
-/// literally the example on yaml-cpp's wiki but
+/// the example on yaml-cpp's wiki but
 /// for glm
 namespace YAML {
 	template<>
@@ -54,8 +54,10 @@ namespace engine::loading {
 	void handle_children(YAML::Node node, Object* obj) {	
 		for (size_t i = 0; i < (node)["children"].size(); ++i) {
 			obj->children.push_back({});
-			Object* o = &obj->children[obj->children.size()-1];
-			handle_object((node["children"][i]), o);
+			Object* o = &obj->children.back();
+			o->parent = obj;
+			handle_object(node["children"][i], o);
+			handle_children(node["children"][i], o);
 		}
 	}
 
