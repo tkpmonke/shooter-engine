@@ -34,7 +34,7 @@ The engine is still very young, so many of these features wont be implemented fo
     - [ ] Scenes (yaml)
     - [ ] Projects (yaml)
 - Editor
-    - [ ] Camera Movement
+    - [x] Camera Movement
     - [x] Inspector
     - [x] Object Hierarchy
     - [x] Gizmos (ImGuizmo)
