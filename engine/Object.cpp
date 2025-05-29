@@ -21,19 +21,13 @@ namespace engine {
 			this->global_position = this->position;
 		}
 
-		if (this->name == "Sphere3") {
-			std::cout << this->global_position.x << ", " << this->global_position.y << ", " << this->global_position.z << "\n";
-
-			std::cout << "Parent is " << (this->parent == nullptr ? "NULL\n" : "Real\n"); 
-			std::cout << "Parent >> " << this->parent->global_position.x << ", " << this->parent->global_position.y << ", " << this->parent->global_position.z << "\n";
-		}
-
 		this->model_matrix = glm::mat4(1.f);
       model_matrix = glm::translate(model_matrix, this->global_position);
       model_matrix *= glm::mat4_cast(glm::quat(glm::radians(this->rotation)));
       model_matrix = glm::scale(model_matrix, this->scale);
 
 		for (Object& o : this->children) {
+			o.parent = this;
 			o.calculate_transform();
 		}
 	}
