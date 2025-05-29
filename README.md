@@ -45,6 +45,8 @@ The engine is still very young, so many of these features wont be implemented fo
     - [x] Load Shader
     - [ ] Load Texture
 
+If you think this list is missing anything important or want to suggest anything, feel free to message me on discord.
+
 ### Developers
 The team that makes shooter-engine possible. If you contribute feel free to add yourself to this list
 - [tkpmonke](https://github.com/tkpmonke) / Lead Developer / Windows and Linux Tester
@@ -58,3 +60,10 @@ shooter-engine uses a few external dependinces for thing i didn't feel like doin
 - [GLM](https://github.com/g-truc/glm)
 - [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo)
 - [TinyGLTF](https://github.com/syoyo/tinygltf)
+
+### Contact
+There are three ways of contacting me
+
+- [Joining the Discord Server](https://discord.gg/Q6sZvdrZXZ)
+- Messaging me on Discord (tkpmonke)
+- Github Issues page (only use if you have an issue)
