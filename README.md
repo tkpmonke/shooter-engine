@@ -52,7 +52,7 @@ The team that makes shooter-engine possible. If you contribute feel free to add 
 - [tkpmonke](https://github.com/tkpmonke) / Lead Developer / Windows and Linux Tester
 
 ### External Libraries
-shooter-engine uses a few external dependinces for thing i didn't feel like doing myself
+shooter-engine uses a few external dependinces for things i didn't feel like doing myself
 
 - [RGFW](https://github.com/ColleagueRiley/RGFW)
 - [ImGUI](https://github.com/ocornut/imgui)
