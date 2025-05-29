@@ -27,9 +27,12 @@ The engine is still very young, so many of these features wont be implemented fo
 - File Loading
     - [x] GLB/GLTF meshes
     - [x] Shaders
-    - [ ] Scenes (yaml)
+    - [x] Scenes (yaml)
     - [ ] Projects (yaml)
 
+- File Writing
+    - [ ] Scenes (yaml)
+    - [ ] Projects (yaml)
 - Editor
     - [ ] Camera Movement
     - [x] Inspector
