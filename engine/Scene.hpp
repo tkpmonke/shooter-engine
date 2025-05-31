@@ -8,6 +8,7 @@ namespace engine {
 	class Scene {
 	public:
 		std::string name = "Cool And Awesome Scene";
+		std::string path = "";
 
 		std::vector<Object> objects;
 		rendering::Camera camera;

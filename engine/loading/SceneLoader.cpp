@@ -5,6 +5,7 @@
 #include "rendering/RenderingDevice.hpp"
 
 #include <yaml-cpp/yaml.h>
+#include <iostream>
 
 /// the example on yaml-cpp's wiki but
 /// for glm
@@ -30,6 +31,12 @@ namespace YAML {
 	    return true;
 	  }
 	};
+
+	Emitter& operator << (Emitter& out, const glm::vec3& vec) {
+		out << YAML::Flow;
+		out << YAML::BeginSeq << vec.x << vec.y << vec.z << YAML::EndSeq;
+		return out;
+	}
 }
 
 namespace engine::loading {
@@ -68,10 +75,84 @@ namespace engine::loading {
 		engine::Scene& s = Scene::get_instance();
 
 		s.name = root["name"].as<std::string>();
+		s.path = path;
 		for (size_t i = 0; i < root["objects"].size(); ++i) {
 			Object* obj = s.create_object();
 			handle_object((root["objects"][i]), obj);
 			handle_children(root["objects"][i], obj);
 		}
+	}
+
+	void save_object(YAML::Emitter* out, Object* o) {
+		*out << YAML::BeginMap;
+	
+		*out << YAML::Key << "name";
+		*out << YAML::Value << o->name;
+		*out << YAML::Key << "position";
+		*out << YAML::Value << o->position;
+		*out << YAML::Key << "rotation";
+		*out << YAML::Value << o->rotation;
+		*out << YAML::Key << "scale";
+		*out << YAML::Value << o->scale;
+		*out << YAML::Key << "mesh";
+		*out << YAML::Value << o->mesh_name;
+		*out << YAML::Key << "draw_mode";
+		*out << YAML::Value << 0;
+		*out << YAML::Key << "shader";
+		*out << YAML::Value << o->shader->name;
+		*out << YAML::Key << "children";
+
+		if (o->children.empty()) {
+			*out << YAML::Flow;
+			*out << YAML::BeginSeq << YAML::EndSeq;
+		} else {
+			*out << YAML::BeginSeq;
+			for (size_t i = 0; i < o->children.size(); ++i) {
+				save_object(out, &o->children[i]);
+			}
+			*out << YAML::EndSeq;
+		}
+
+		*out << YAML::EndMap;
+	}
+
+	void save_scene() {
+		YAML::Emitter out;
+		engine::Scene& s = Scene::get_instance();
+
+		out << YAML::BeginMap;
+		
+		out << YAML::Key << "scene";
+		out << YAML::Value << YAML::BeginMap;
+
+		out << YAML::Key << "name";
+		out << YAML::Value << s.name;
+
+		out << YAML::Key << "objects";
+		out << YAML::Value << YAML::BeginSeq;
+		for (size_t i = 0; i < s.objects.size(); ++i) {
+			save_object(&out, &s.objects[i]);
+		}
+		out << YAML::EndSeq;
+
+		out << YAML::Key << "camera";
+		out << YAML::Value << YAML::BeginMap;
+		
+		out << YAML::Key << "fov";
+		out << YAML::Value << s.camera.fov;
+		out << YAML::Key << "min";
+		out << YAML::Value << s.camera.min;
+		out << YAML::Key << "max";
+		out << YAML::Value << s.camera.max;
+		out << YAML::Key << "position";
+		out << YAML::Value << s.camera.position;
+		out << YAML::Key << "rotation";
+		out << YAML::Value << s.camera.rotation;
+		out << YAML::Key << "projection";
+		out << YAML::Value << s.camera.projection_mode;
+
+		out << YAML::EndMap;
+
+		AssetCache::get_instance().write_file(s.path.data(), out.c_str());
 	}
 }

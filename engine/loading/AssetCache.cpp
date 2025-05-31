@@ -158,4 +158,10 @@ namespace engine::loading {
 
 		this->files[path].is_loaded = true;
 	}
+
+	void AssetCache::write_file(const char* path, std::string data) {
+		std::ofstream ofstream((std::filesystem::current_path() / path).make_preferred());
+		ofstream << data;
+		ofstream.close();
+	}
 }

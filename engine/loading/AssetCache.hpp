@@ -50,6 +50,8 @@ namespace engine::loading {
 		ENGINE_CROSSPLATFORM_EXPORT void load_mesh(const char* path);
 		ENGINE_CROSSPLATFORM_EXPORT void load_shader(const char* vertex_path, const char* fragment_path, const char* shader_path);
 
+		ENGINE_CROSSPLATFORM_EXPORT void write_file(const char* path, std::string data);
+
 		ENGINE_CROSSPLATFORM_EXPORT load_mode get_mode();
 		ENGINE_CROSSPLATFORM_EXPORT void set_mode(load_mode mode);
 

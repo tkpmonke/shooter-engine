@@ -1,22 +1,22 @@
 scene:
-  name: "MainScene"
+  name: MainScene
   objects:
     - name: Sphere
-      position: [2, 0, 0]
-      rotation: [0, 0, 0]
-      scale: [2, 1.25, 1]
+      position: [2.51754832, 0, 4.10880089]
+      rotation: [0, -0, 0]
+      scale: [11.2663441, 1.25, 6.43761635]
       mesh: assets/sphere.glb
       draw_mode: 0
       shader: core/default
       children:
         - name: Sphere2
-          position: [0, 2, 0]
-          rotation: [65, 45, 23]
-          scale: [1.5, 0.5, 1]
+          position: [-3.03850341, -0.0184665918, -15.7855787]
+          rotation: [64.9999924, 45, 22.9999905]
+          scale: [1.5, 0.49999997, 0.999999881]
           mesh: assets/sphere.glb
           draw_mode: 0
           shader: core/default
-          children: 
+          children:
             - name: Sphere3
               position: [1, -6, 6]
               rotation: [75, 235, 123]
@@ -26,16 +26,16 @@ scene:
               shader: core/different_default
               children: []
         - name: Sphere4
-          position: [2, 2, 4]
-          rotation: [25, 75, -53]
-          scale: [1.5, 1, 1]
+          position: [-0.876291394, 2.52644086, 3.10902524]
+          rotation: [64.9999924, 45, 22.9999905]
+          scale: [1.5, 0.49999997, 0.999999881]
           mesh: assets/sphere.glb
           draw_mode: 0
-          shader: core/different_default
+          shader: core/default
           children: []
   camera:
     fov: 75
-    min: 0.1
+    min: 0.100000001
     max: 100
     position: [0, 0, 5]
     rotation: [0, 0, 0]

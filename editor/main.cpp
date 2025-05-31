@@ -46,6 +46,7 @@ int main(void) {
 		window.present();
 	}
 
+	loading::save_scene();
 	scene.shutdown();
 	editor::gui::shutdown();
 	loading::AssetCache::shutdown();
