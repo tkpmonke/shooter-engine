@@ -31,7 +31,7 @@ The engine is still very young, so many of these features wont be implemented fo
     - [ ] Projects (yaml)
 
 - File Writing
-    - [ ] Scenes (yaml)
+    - [x] Scenes (yaml)
     - [ ] Projects (yaml)
 - Editor
     - [x] Camera Movement
