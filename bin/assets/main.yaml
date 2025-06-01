@@ -2,8 +2,8 @@ scene:
   name: MainScene
   objects:
     - name: Sphere
-      position: [-5.67691851, -4.18057025e-05, -4.59688091]
-      rotation: [-0.000678622629, -31.7232285, 0.000311349286]
+      position: [-2.67700005, -4.18057025e-05, -39.5970001]
+      rotation: [-0.000678622629, -182.723007, 0.000311349286]
       scale: [3, 1, 1.94251978]
       mesh: assets/sphere.glb
       draw_mode: 0
