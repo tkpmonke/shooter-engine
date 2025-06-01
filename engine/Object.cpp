@@ -2,7 +2,10 @@
 #include "Scene.hpp"
 #include "rendering/Camera.hpp"
 
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
+
 #include <iostream>
 namespace engine {
 	void Object::initilize(rendering::Mesh* mesh, rendering::Shader* shader) {
@@ -15,16 +18,23 @@ namespace engine {
 	}
 
 	void Object::calculate_transform() {
+
+		glm::mat4 local = glm::mat4(1.f);
+      local = glm::translate(local, this->position);
+      local *= glm::mat4_cast(glm::quat(glm::radians(this->rotation)));
+      local = glm::scale(local, this->scale);
+		
 		if (this->parent) {
-			this->global_position = this->position + this->parent->global_position;
+			this->model_matrix = this->parent->model_matrix * local;
 		} else {
-			this->global_position = this->position;
+			this->model_matrix = local;
 		}
 
-		this->model_matrix = glm::mat4(1.f);
-      model_matrix = glm::translate(model_matrix, this->global_position);
-      model_matrix *= glm::mat4_cast(glm::quat(glm::radians(this->rotation)));
-      model_matrix = glm::scale(model_matrix, this->scale);
+		glm::vec3 skew;
+		glm::vec4 perspective;
+		glm::quat rot_quat;
+		glm::decompose(this->model_matrix, this->global_scale, rot_quat, this->global_position, skew, perspective);
+		this->global_rotation = glm::degrees(glm::eulerAngles(rot_quat));
 
 		for (Object& o : this->children) {
 			o.parent = this;

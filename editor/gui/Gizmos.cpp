@@ -1,8 +1,10 @@
 #include "GUI.hpp"
 #include "Scene.hpp"
 
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 
 namespace editor::gui {
 	void draw_gizmos() {
@@ -25,14 +27,30 @@ namespace editor::gui {
 			ImGuizmo::DecomposeMatrixToComponents(
 				glm::value_ptr(gui_state.selected_object->model_matrix),
 				glm::value_ptr(gui_state.selected_object->global_position),
-				glm::value_ptr(gui_state.selected_object->rotation),
-				glm::value_ptr(gui_state.selected_object->scale)
+				glm::value_ptr(gui_state.selected_object->global_rotation),
+				glm::value_ptr(gui_state.selected_object->global_scale)
 			);
 
 			if (gui_state.selected_object->parent == NULL) {
 				gui_state.selected_object->position = gui_state.selected_object->global_position;
+				gui_state.selected_object->rotation = gui_state.selected_object->global_rotation;
+				gui_state.selected_object->scale = gui_state.selected_object->global_scale;;
 			} else {
-				gui_state.selected_object->position = gui_state.selected_object->global_position - gui_state.selected_object->parent->global_position;
+				glm::mat4 parent_inverse = glm::inverse(gui_state.selected_object->parent->model_matrix);
+				glm::mat4 local = parent_inverse * gui_state.selected_object->model_matrix;
+				
+				glm::vec3 skew;
+				glm::vec4 perspective;
+				glm::quat rot_quat;
+				
+				glm::decompose(local,
+					gui_state.selected_object->scale,
+					rot_quat,
+					gui_state.selected_object->position,
+					skew,
+					perspective);
+				
+				gui_state.selected_object->rotation = glm::degrees(glm::eulerAngles(rot_quat));
 			}
 		}
 

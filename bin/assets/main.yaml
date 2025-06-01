@@ -2,17 +2,17 @@ scene:
   name: MainScene
   objects:
     - name: Sphere
-      position: [2.51754832, 0, 4.10880089]
-      rotation: [0, -0, 0]
-      scale: [11.2663441, 1.25, 6.43761635]
+      position: [-5.67691851, -4.18057025e-05, -4.59688091]
+      rotation: [-0.000678622629, -31.7232285, 0.000311349286]
+      scale: [3, 1, 1.94251978]
       mesh: assets/sphere.glb
       draw_mode: 0
       shader: core/default
       children:
         - name: Sphere2
-          position: [-3.03850341, -0.0184665918, -15.7855787]
-          rotation: [64.9999924, 45, 22.9999905]
-          scale: [1.5, 0.49999997, 0.999999881]
+          position: [-0.467247099, 4.30935907, 5.86361742]
+          rotation: [-60.5476685, -43.892067, -68.5154037]
+          scale: [0.986819863, 1.9239136, 1]
           mesh: assets/sphere.glb
           draw_mode: 0
           shader: core/default
@@ -26,9 +26,9 @@ scene:
               shader: core/different_default
               children: []
         - name: Sphere4
-          position: [-0.876291394, 2.52644086, 3.10902524]
-          rotation: [64.9999924, 45, 22.9999905]
-          scale: [1.5, 0.49999997, 0.999999881]
+          position: [-0.234585837, 5.75204086, 0.333817512]
+          rotation: [-33.5992317, -4.98804617, 93.8597565]
+          scale: [1.0876075, 1.00000131, 0.999999821]
           mesh: assets/sphere.glb
           draw_mode: 0
           shader: core/default

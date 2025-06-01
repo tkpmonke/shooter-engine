@@ -30,6 +30,8 @@ namespace engine {
 		ENGINE_CROSSPLATFORM_EXPORT void shutdown();
 		
 		glm::vec3 global_position = {0, 0, 0};
+		glm::vec3 global_rotation = {0, 0, 0};
+		glm::vec3 global_scale = {1, 1, 1};
 
 		glm::mat4 model_matrix = {0};
 	};
